@@ -91,7 +91,7 @@ If you wanna help, the rules are simple:
 | Bouncer           | Static analysis, Error Guidance, and C-Messaging Diagnostics.                  | A bit tedious |  
 | Unfolders         | Simple text/syntax transforms (e.g., `??` -> ternary, `[]` stripping.          | Low           | 
 | Transpilers       | Context-aware logic (e.g., Include guards, mapping types, `match` exhaustion). | Medium        |
-| C-OOP (C99 Only)  | Designed to generate machine code and memory layouts identical to C++ to achieve OOP in C for C-OOP. | Extreme Demon Difficulty | 
+| C-OOP (C99 Only)  | C-OOP in C99 mode to generate C99 code with C++-compatible object layouts and vtables. | Extreme Demon Difficulty | 
 
 If you want to get into C-Messaging RIGHT NOW, use the C++17 mode in the meantime. Don't expect C-OOP to drop anytime soon. 
 
