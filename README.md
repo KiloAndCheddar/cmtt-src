@@ -1,82 +1,69 @@
 # C-Messaging Transpiler Toolkit (CMTT)
 
-CMTT is a text processor and transpiler for my cursed object oriented superset of C99 & C++17 called "C-Messaging", which a transpiled language I made because I cannot bear to look at r/C_Programming LARP OOP in C with 500 structs. :p
+A *work-in-progress* transpiler and static analysis toolkit that removes boilerplate, improves diagnostics, and generates predictable Orthodox C++17 using C-Messaging.
 
-Additionally, this makes the Embedded/Orthodox C++ rules formalized instead of having to remember them in the superset transpiled language.
+### What's C-Messaging? It's a transpiled language that focuses on:
+* Cleaner Object-oriented syntax!
+* Borrows ideas from several languages,
+    - including C++, C, PHP, C#, Swift, and Objective-C. :D
+* Better diagnostics
+* Reduced boilerplate
+* Predictable generated code (on disk)
+* Optional project generation without building
+* Compatibility with existing C++17 toolchains (GCC & Clang)
+* Designed for developers who want organization, readibility, and predictable generated code.
 
-Because CMTT outputs C99 or Orthodox C++17 (depending on mode), you can use it with any compiler! 
-Even cursed Chernobyl-style forked GCC versions for exotic 24-bit or 32-bit hardware that chip manufacturers use for world domination (or just to make embed devs depressed, which is more likely).
+---
 
-CMTT is distributed under the [BSD 3-Clause](LICENSE).
+By default, CMTT uses Safety Mode. It enforces Orthodox C++17 style rules and performs additional static analysis.
 
+For projects prioritizing convenience over strict safety checks, Ease-of-Use mode can be enabled.
+
+
+#### CMTT is distributed under the [BSD 3-Clause](LICENSE).
+---
 ### Status: Alpha / Prototype / Whateveritscalled
-- Tokenizer is indev.
+- The priority now is just to work on unfolders to get started. Easy to compile.
+- Make a basic proof of concept
 - Right now being used to dogfood my personal stuff
 - I'll try to keep the main dependency free as much as possible. :p
 
-#### CMTT Architecture
-| Component         | Responsibility                                                                 |  Complexity   | 
-| ----------------- | ------------------------------------------------------------------------------ | ------------- | 
-| Main Orchestrator | Main function, step-by-step, project reading and etc.                          | Not that hard |
-| Unfolders         | Simple text/syntax transforms (e.g., `??` -> ternary, `[]` stripping.          | Low           | 
-| Transpilers       | Context-aware logic (e.g., Include guards, mapping types, `match` exhaustion). | Medium        | 
-| C-OOP (C99 Only)  | Generating the ABI-compliant C structures (vtable-like dispatch, `self` pointers to mimic C++ under the hood while kept simple. | Extreme Demon Difficulty | 
+### What does it look like?
 
-Because C++17 Mode uses the existing OOP setups, we don't need the C-OOP step.
-However for C99 (to make r/C_Programmers and embed devs less miserable), we're gonna try C-OOP instead. 
+#### C-Messaging:
+```cpp
+class Player {
+    public float speed = 5.0f;
 
-And for C-OOP, I'm doing the ABI in my [SPEC](SPEC.md) (doesnt exist yet). we'll be mimicking the C++ ABI because if we didn't, the linker would eat us alive.
+    void jump() {
+        [physics->applyForce(self, 10)];
+    }
+}
 
-If you want to get into C-Messaging RIGHT NOW, use the C++17 mode in the meantime. Don't expect C-OOP to drop anytime soon. I never wrote a vtable so its the friends we made along the way. :D
+auto username = user ?? "Anonymous";
+```
+#### C++17 (Generated Output):
+```cpp
+class Player {
+public:
+    float speed = 5.0f;
 
-It would've been too easy to just focus on C++17 but the whole point was to STOP USING STRUCTS and praying nobody touches your imaginary PRIVATE class and a memory leak.
-Instead, you'll finally get:
-- `[ERROR: #0x999] Unauthorized access to private member 'data' in 'Player' struct.`
-- BEFORE it hits the compiler. Absolute Cinema.
-- its an encapsulation layer to C99 that C itself can't enforce + C-Msg unfolded deterministic treats! :D
-- results? more bearable debugging mysterious memory corruption bugs! ^_^
+    void jump() {
+        physics->applyForce(this, 10);
+    }
+};
 
-It won't be like CObject and private classes are ENFORCED by the CMTT. (virtually impossible in normal C)
-
-## are you unironically going to dogfood this
-yas queen slaaaaaay :3c
-
-## why isnt this professional
-- because i Just made this a few days ago 
-- powered by ADHD & im making it by myself
-- i will fix it up later if it becomes a hit (i will personally remember my early contributors by name. promise! :D)
-- anyone wanting to fund this, i'll unironically spend it on tim hortons, food, a PC with 64gb of ram, steam games, and rent. 
-    - this speeds up devtime exponentially. Gramerci et minna, arigatou! ⸜(｡˃ ᵕ ˂ )⸝♡
-- if i keep dying in tarkov, i will work on it more!
-
-## What should I expect? 
-The goals:
-- Make your life easier (Clean predictable abstractions without STD bloat).
-- Transparency First. (You see exactly what the compiler sees. Don't like it? Modify the exported project yourself!)
-- Maximum Compatibility.
-- Modern Safety, C speed. (I stole some features from PHP, C#, Swift, etc. like `??` operator, `[]` message calls, and even `#include_once` but unfolds into standard C99/C++17.)
-- In C99 mode, it counts your malloc and frees to see if you're getting a memory leak *before* compile time.
-- If your project demands C99 but you want OOP, you can use Orthodox C++17-style OOP (like a manual RAII so it errors you if you dont fix it). I'm calling it C-OOP (as original as it is).
-- In C++17, you can still program like normal without cursed stuff.
-- Adding Error Guidance based on hashes for common error patterns so noobs helping your project can understand: "oooh! i gotta read the guidelines and the error is about XYZ!"
-
-And dumb features like:
-- PHP style `__construct(public string $name)` to kill boilerplate. :p
-- Match Expressions (no more dumb Switch/Break stuff)
-- Named Arguments `doStuff(timeout: 10, retries: 3);` which transpiles to `doStuff(10, 3);`.
-- Built-in Associative Arrays `['key' => 'value']` because `std::unordered_map` is too fat and heavy.
-- A Transpiler Bouncer to make sure you're using C-Msg features right. The Bouncer isn't there to fix your code, but to audit it. 
-- C-OOP in C99 mode to convert into manual vtables inside structs to mimic C++'s OOP, and same Orthodox C++ OOP syntax.
-
-You still have to make your C-Messaging code is good if you're using C-Msg features. If you wanna do a manual C stuff, it
-
-
+auto username =
+    (user != nullptr)
+        ? user
+        : "Anonymous";
+```
 
 ## Documentation
 
-There is NO documentation, NO help, NO guidance (for now, I just started it cuz im baby and I don't wanna write it down yet).
+There is NO documentation, NO help, NO guidance... yet for now. I didn't make those yet
 
-If you guys want it, I can write it as I go. Sorry in advance if it's messy. :c
+If you guys want it, I can write it as I go. Sorry in advance if it's messy or isn't there. :c
 
 ## Installation
 
@@ -92,16 +79,87 @@ Literally compile it in GCC/clang as C++17.
 If you wanna help, the rules are simple:
 - Please Fork, make changes, and make a Pull Request.
 - I don't believe in mailing lists so please discuss on GitHub.
-- If you have a new idea (eureka! :D), please treat it like an informal RFC (guys! i got an idea! look at how i did it!) type stuff.
-- Bug fixes don't really need those (since bugs are totally not new features).
+- If you have a new idea (eureka! :D), please treat it like an informal RFC (guys! i got an idea! look at how i did it!) type stuff. Don't take it *too* seriously.
+- Bug fixes don't really need the informal RFC idea (since bugs are totally not new features).
+- I'm opinionated and I'm genuinely very happy to be proven wrong if there's a better way.
+- This is my current design philosophy and scope. Please convince me with practical reasoning and your commits will be added! :D
 
-## Why use this instead of manual Orthodox C++? Freakin' nerd... >:/
+## CMTT Architecture
+| Component         | Responsibility                                                                 |  Complexity   | 
+| ----------------- | ------------------------------------------------------------------------------ | ------------- | 
+| Main Orchestrator | Main function, step-by-step, project reading and etc.                          | Not that hard |
+| Bouncer           | Static analysis, Error Guidance, and C-Messaging Diagnostics.                  | A bit tedious |  
+| Unfolders         | Simple text/syntax transforms (e.g., `??` -> ternary, `[]` stripping.          | Low           | 
+| Transpilers       | Context-aware logic (e.g., Include guards, mapping types, `match` exhaustion). | Medium        |
+| C-OOP (C99 Only)  | Designed to generate machine code and memory layouts identical to C++ to achieve OOP in C for C-OOP. | Extreme Demon Difficulty | 
+
+If you want to get into C-Messaging RIGHT NOW, use the C++17 mode in the meantime. Don't expect C-OOP to drop anytime soon. 
+
+I never wrote a vtable before so its the friends we made along the way. :D
+
+## Some Q&A
+
+### What's the workflow like?
+
+CMTT isn't just a transpiler sitting in a pipe. It acts more like a C++17 project generator that GCC / Clang later reads.
+
+For example: `main.cm -> CMTT -> /output_cpp/ -> GCC / Clang -> Binary`.
+
+One of the biggest fears developers have with transpilers is:
+> "What if the transpiler disappears? D:"
+
+In CMTT, it addresses that! If all the generated code sits on the disk:
+```bash
+cmtt main.cm --generate-project-only
+```
+
+Then the user still owns the `/output_cpp/` forever. If you didn't use the flag, it still generates it anyway before building.
+Even if CMTT disappeared tomorrow, they could continue building on the generated project, which appeals to businesses and long-lived embedded products.
+
+### Are you seriously going to dogfood this?
+yas queen slaaaaaay :3c
+
+### Why isnt this professional?
+- Because I just made this a few days ago. 
+- Powered by ADHD & my free time.
+- I'll fix it up later if it becomes interesting. (i will personally remember my early contributors by name. promise! :D)
+- Anyone wanting to fund this, I'll unironically spend it on Tim Hortons, food, a PC with 64gb of ram, steam games, and rent. 
+    - This speeds up devtime exponentially. Gramerci et minna, arigatou! ⸜(｡˃ ᵕ ˂ )⸝♡
+- If i keep dying in tarkov, i will work on it more!
+
+### What should I expect? 
+#### The goals:
+- Make your life easier (Clean predictable abstractions).
+- Transparency First. (You see exactly what the compiler sees. Don't like it? Modify the exported project yourself!)
+- Maximum Compatibility.
+- Modern Safety, C speed. (I stole some features from PHP, C#, Swift, etc. like `??` operator, `[]` message calls, and even `#include_once` but unfolds into standard C99/C++17.)
+- In C++17, you can still program like normal without cursed stuff.
+- Adding Error Guidance based on hashes for common error patterns so noobs helping your project can understand: "oooh! i gotta read the guidelines and the error is about XYZ!"
+- A Transpiler Bouncer to make sure you're using C-Msg features right. The Bouncer isn't there to fix your code, but to audit it.
+
+#### And I'll explore experimental features like:
+- PHP style `__construct(public string $name)` to kill boilerplate. :p
+- Match Expressions (no more dumb Switch/Break stuff)
+- Named Arguments `doStuff(timeout: 10, retries: 3);` which transpiles to `doStuff(10, 3);`.
+- Built-in **PHP-style** Associative Arrays `['key' => 'value']` instead of `std::unordered_map`. It's a dynamic insertion ordered map implemented as a hash table that links keys to values.
+    - /!\ VERY EXPERIMENTAL: Just a warning! It's a significantly larger feature idea than the other planned features, so it might get delayed or removed.
+    - Not stack allocated, uses system heap.
+    - Done as a hybrid hash table and linked list structure.
+    - Values can be mixed types.
+    
+#### And REALLY experimental stuff like:  
+- C-OOP in C99 mode to generate C99 code with C++-compatible object layouts and vtables.
+- (we'll see what happens)
+
+You still have to make your C-Messaging code is good if you're using C-Msg features. If you wanna do a manual C stuff, it
+
+### Why use this instead of Orthodox C++17 or a library? Freakin' nerd... >:/
 
 Because the whole point is to MAKE YOUR LIFE EASIER. Like dude, you absolutely CAN do this manually. I'm not your mom.
 
 You can manually type out your `ifndef` guards, you can manually type ternary operator checks, and you can manually manage your obj scopes to mimic RAII.
 
-But doing that 500 times a day is why people introduce bugs. My C-Messaging transpiled lanauge isn't about adding magic, it's about automating them mental tax of your code so you can focus on logic more.
+But doing that 500 times a day is why people introduce bugs. The whole point of C-Messaging isn't about adding magic, it's about automating the mental tax of your code so you can focus on logic more.
 
 For example:
 
@@ -109,11 +167,11 @@ For example:
 
 ```cpp
 // C-Messaging
-#include_once "joemama.h"
+#include_once "joemama.hm"
 
 // Transpiled into C99/C++17 Include Guards):
-#ifndef _JOEMAMA_INC_GUARD_
-#define _JOEMAMA_INC_GUARD_
+#ifndef _CMSG_GUARD_6F4B9A_JOEMAMA_HM
+#define _CMSG_GUARD_6F4B9A_JOEMAMA_HM
 #include "joemama.h"
 #endif
 
@@ -160,3 +218,6 @@ void update_system(Entity* e) {
 }
 ```
 This should give you a basic idea of what you might be getting familiar with. :P
+
+### Isn't this quite ambitious?
+im baby
