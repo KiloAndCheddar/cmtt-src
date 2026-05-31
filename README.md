@@ -95,7 +95,7 @@ If you wanna help, the rules are simple:
 
 If you want to get into C-Messaging RIGHT NOW, use the C++17 mode in the meantime. Don't expect C-OOP to drop anytime soon. 
 
-I never wrote a vtable before so its the friends we made along the way. :D
+For future C99 OOP generation ideas, see [SPEC.md](SPEC.md). I never wrote a vtable before so its the friends we made along the way. :D
 
 ## Some Q&A
 
