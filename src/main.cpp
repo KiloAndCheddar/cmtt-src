@@ -1,26 +1,9 @@
 #include <stdio.h>
 #include <string.h>
-//#include "unfolders/BracketStripper.hpp"
-
-// Code probably would be used in C-Messaging Transpiler Toolkit
-void removeBrackets(char *str) {
-    char *src = str; // Pointer to read from
-    char *dst = str; // Pointer to write to
-
-    while (*src != '\0') {
-        // If the character is NOT a bracket, copy it to dst
-        if (*src != '[' && *src != ']') {
-            *dst = *src;
-            dst++;
-        }
-        src++;
-    }
-    // Add the null terminator to mark the new end of the string
-    *dst = '\0'; 
-}
+#include "unfolders/BracketStripper.hpp"
 
 int main() {
-    printf("[C-Messaging Transpiler Toolkit]\n");
+    printf("[C-Messaging Transpiler Toolkit v0.01]\n");
     printf("- paypal/interac me $30000 svp :c\n\n");
 
     // [player->jump()] test
@@ -40,6 +23,10 @@ int main() {
     printf("Before: %s\n", test);
     removeBrackets(test);
     printf("After : %s\n\n", test);
+	
+    // Exit idk :P
+    printf("Press Enter to continue . . . ");
+    getchar();
 
     return 0;
 }
