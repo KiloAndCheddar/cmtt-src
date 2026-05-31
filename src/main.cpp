@@ -24,6 +24,16 @@ int main() {
     removeBrackets(test);
     printf("After : %s\n\n", test);
 	
+    strcpy(test, "matrix[x][y];");
+    printf("Before: %s\n", test);
+    removeBrackets(test);
+    printf("After : %s\n\n", test);
+	
+	strcpy(test, "printf(\"[hello]\");");
+    printf("Before: %s\n", test);
+    removeBrackets(test);
+    printf("After : %s\n\n", test);
+	
     // Exit idk so it doesnt close on click :P
     printf("Press Enter to continue . . . ");
     getchar();
