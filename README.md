@@ -69,10 +69,15 @@ If you guys want it, I can write it as I go. Sorry in advance if it's messy or i
 
 ### Building CMTT source code
 
-Literally compile it in GCC/clang as C++17. 
+#### Requirements (For Complete C++17):
+- GCC 8.1 and later
+- Clang 5.0 and later
+- CMake... idk???
 
-* Idk smth like GCC (g++): `g++ -std=c++17 main.cpp -o cmtt` (min ver GCC 8.1+ for complete C++17)
-* Or if you hate yourself (Clang, clang++): `clang++ -std=c++17 main.cpp -o cmtt` (min ver Clang 5+ for complete C++17)
+### Setup 
+1.	Choose your desired directory/folder, get the latest version with:
+    - `git clone https://github.com/KiloAndCheddar/cmtt-src.git`
+2. I genuinely have no idea yet. I'll report back when I figure out how to get it working.
 
 ## Contributing
 
