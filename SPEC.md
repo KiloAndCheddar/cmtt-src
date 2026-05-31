@@ -2,6 +2,8 @@
 #### (C Object-Oriented Programming? Mouthful. :p) Work in progress anyway.
 Ignore the bad spelling.
 
+**BY THE WAY. Scroll all the way down to see expected generated code, then read everything else! :p**
+
 ### License
 
 Like the rest of CMTT, any C-OOP implimentation is intended to be released under the [BSD 3-Clause License](LICENSE).
@@ -125,6 +127,28 @@ Generated code should remain understandable and debuggable, with comments from C
 
 If the output becomes a mess, there is literally no point since the designed failed regardless of whether it actually works.  
 
+## Desired Output Style
+
+If C-OOP manages to survive development hell and becomes functional, the generated code should remain understandable to ordinary C programmers.
+
+For example, a simple class might generate something similar to:
+```c
+// how CMTT should map a class layout on disk for C99 (i hope)
+typedef struct AnimalVTable AnimalVTable;
+
+typedef struct Animal {
+    const AnimalVTable* vtable; // always at offset 0, like C++
+    int age;
+} Animal;
+
+struct AnimalVTable {
+    void (*speak)(Animal* self); // clear, readable function pointers
+};
+```
+Even if the implimentation needs some casts internally, the *generated code people see* should look like something you'd actually write.
+The appeal isn't really "yet another OOP in C", it's "Can we generate C code that looks like something a sane programmer would write by hand?".
+
+That's why we have `void (*speak)(Animal* self);` instead of `void (*speak)(void* self);`. Readibility over cleverness. Hopefully, you guys will get it at a first glance.
 
 ### Why not use C Object System, OOC, or SOOL?
-meow
+meow meow :3
