@@ -19,12 +19,12 @@ int main() {
     printf("After : %s\n\n", test);
 
     // See if it doesnt break anything in here
-    strcpy(test, "auto name = [e->data->name] ?? ""Unknown Entity"";");
+    strcpy(test, "auto name = [e->data->name] ?? \"Unknown Entity\";");
     printf("Before: %s\n", test);
     removeBrackets(test);
     printf("After : %s\n\n", test);
 	
-    // Exit idk :P
+    // Exit idk so it doesnt close on click :P
     printf("Press Enter to continue . . . ");
     getchar();
 
