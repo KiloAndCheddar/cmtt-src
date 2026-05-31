@@ -146,6 +146,7 @@ struct AnimalVTable {
 };
 ```
 Even if the implimentation needs some casts internally, the *generated code people see* should look like something you'd actually write.
+
 The appeal isn't really "yet another OOP in C", it's "Can we generate C code that looks like something a sane programmer would write by hand?".
 
 That's why we have `void (*speak)(Animal* self);` instead of `void (*speak)(void* self);`. Readibility over cleverness. Hopefully, you guys will get it at a first glance.
