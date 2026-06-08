@@ -1,18 +1,17 @@
 cmake_minimum_required(VERSION 3.16)
+project(CMTT LANGUAGES CXX) 
+# we're not using C code
 
-project(CMTT LANGUAGES CXX)
-
-# Set the C++17 standard
+# Enforce strict C++17 compliance, error if unsupported, and strict portable ISO C++17
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF) # Disables GNU extensions to ensure strict compliance
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Recursively grab ALL .cpp files inside the src/ folder automatically
-#file(GLOB_RECURSE SOURCES "src/*.cpp")
 file(GLOB_RECURSE SOURCES
     "${CMAKE_SOURCE_DIR}/src/*.cpp"
 )
-
+# Custom output folder lol
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
     ${CMAKE_SOURCE_DIR}/bin
 )
@@ -20,14 +19,16 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
 # Tell CMake to make an executable out of all those discovered sources
 add_executable(cmtt ${SOURCES})
 
+# MSVC hack to mimic GCC flags
 if(MSVC)
-    target_compile_options(cmtt PRIVATE /W4)
+    target_compile_options(cmtt PRIVATE /W4 /WX)
 else()
     target_compile_options(cmtt PRIVATE
         -Wall
         -Wextra
         -Wpedantic
-        #-Werror
+        -Werror
+        # i might hate myself later :p
     )
 endif()
 
