@@ -19,6 +19,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
 # Tell CMake to make an executable out of all those discovered sources
 add_executable(cmtt ${SOURCES})
 
+target_link_options(cmtt PRIVATE -static -static-libgcc -static-libstdc++)
+
 # MSVC hack to mimic GCC flags
 if(MSVC)
     target_compile_options(cmtt PRIVATE /W4 /WX)
