@@ -1,5 +1,7 @@
 # C-Messaging Transpiler Toolkit (CMTT)
 
+**TLDR:** It's my productivity layer for C++17 (and C99 maybe).
+
 A *work-in-progress* transpiler and static analysis toolkit that removes boilerplate, improves diagnostics, and generates predictable Orthodox C++17 using C-Messaging.
 
 ### What's C-Messaging? It's a transpiled language that focuses on:
